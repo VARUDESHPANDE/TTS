@@ -1,0 +1,6 @@
+streamlit
+pyttsx3
+os
+shutil
+openai
+docx
