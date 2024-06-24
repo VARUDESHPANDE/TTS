@@ -1,4 +1,4 @@
-streamlit
-pyttsx3
-python-docx
-openai==0.28
+streamlit==0.89.0  # Specific version of Streamlit you are using
+python-docx==0.8.11  # Specific version of python-docx
+pyttsx3==2.90  # Specific version of pyttsx3
+openai>=1.0.0  # Ensure you have at least version 1.0.0 of openai package
