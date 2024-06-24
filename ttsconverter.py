@@ -6,7 +6,7 @@ import shutil
 import openai
 
 # Set your OpenAI API key here
- headers = {
+headers = {
             
             'Authorization': f'Bearer {OPENAPI_KEY}',
         }
