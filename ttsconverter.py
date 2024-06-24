@@ -6,7 +6,6 @@ import shutil
 import openai
 
 # Set your OpenAI API key here
-
 openai.api_key = "OPEN_API_KEY"
 
 # Ensure necessary directories exist
@@ -47,14 +46,16 @@ def latex_to_readable(latex_code):
     {latex_code}
     """
     
-    response = openai.Completion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are an intelligent assistant."},
-            {"role": "user", "content": combined_prompt}
-        ]
-    )
-    human_readable_text = response.choices[0]['message']['content'].strip()
+    try:
+        response = openai.Completion.create(
+            engine="davinci-codex",  # Use the Codex engine for code understanding
+            prompt=combined_prompt,
+            max_tokens=150  # Adjust max_tokens as per your requirement
+        )
+        human_readable_text = response['choices'][0]['text'].strip()
+    except Exception as e:
+        return f"Error: {e}"
+    
     return human_readable_text
 
 # Streamlit app
@@ -75,28 +76,8 @@ if uploaded_file is not None:
 
     text = extract_text_from_docx(file_path)
 
-    # Use ChatGPT Turbo to convert text
+    # Use OpenAI API to convert LaTeX to human-readable text
     try:
         with st.spinner("Converting LaTeX to human-readable text..."):
             converted_text = latex_to_readable(text)
-        st.success("Conversion successful!")
-    except Exception as e:
-        st.error(f"Error communicating with OpenAI: {e}")
-
-    st.write("### Converted Text")
-    st.write(converted_text)
-
-    mp3_output_path = os.path.join('output', 'final.mp3')
-    error = convert_text_to_speech(converted_text, mp3_output_path)
-    if error:
-        st.error(f"Error during text-to-speech conversion: {error}")
-    else:
-        st.success("Text-to-speech conversion completed!")
-        st.write("Download your MP3 file:")
-        with open(mp3_output_path, "rb") as f:
-            st.download_button(
-                label="Download MP3",
-                data=f,
-                file_name="final.mp3",
-                mime="audio/mpeg"
-            )
+        st.success
