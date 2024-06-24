@@ -1,5 +1,5 @@
 import streamlit as st
-from pydocx import Document
+from docx import Document
 import pyttsx3
 import os
 import shutil
