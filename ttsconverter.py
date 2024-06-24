@@ -3,7 +3,8 @@ from docx import Document
 import pyttsx3
 import os
 import shutil
-import openai
+from openai import OpenAI
+client = OpenAI()
 
 # Set your OpenAI API key here
 openai.api_key = "YOUR_OPENAI_API_KEY"
@@ -47,7 +48,7 @@ def latex_to_readable(latex_code):
     """
     
     try:
-        response = openai.Completion.create(
+        response = client.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are an intelligent assistant."},
