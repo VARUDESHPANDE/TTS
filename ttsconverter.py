@@ -47,7 +47,7 @@ def latex_to_readable(latex_code):
     {latex_code}
     """
     
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are an intelligent assistant."},
