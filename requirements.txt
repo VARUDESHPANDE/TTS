@@ -1,4 +1,4 @@
 streamlit
 pyttsx3
 python-docx
-openai
+openai==0.28
