@@ -1,6 +1,4 @@
 streamlit
 pyttsx3
-os
-shutil
+python-docx
 openai
-docx
