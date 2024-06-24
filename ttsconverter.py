@@ -8,7 +8,7 @@ import openai
 # Set your OpenAI API key here
 headers = {
             
-            'Authorization': f'Bearer {OPENAPI_KEY}',
+            'Authorization': f'Bearer {OPEN_API_KEY}',
         }
 #openai.api_key = OPENAPI_KEY
 
