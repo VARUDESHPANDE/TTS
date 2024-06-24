@@ -3,4 +3,4 @@ pyttsx3
 os
 shutil
 openai
-docx
+pydocx
