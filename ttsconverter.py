@@ -7,7 +7,7 @@ from openai import OpenAI
 client = OpenAI()
 
 # Set your OpenAI API key here
-openai.api_key = "YOUR_OPENAI_API_KEY"
+openai.api_key = "OPEN_API_KEY"
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
