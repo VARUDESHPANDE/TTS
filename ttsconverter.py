@@ -6,11 +6,8 @@ import shutil
 import openai
 
 # Set your OpenAI API key here
-headers = {
-            
-            'Authorization': f'Bearer {OPEN_API_KEY}',
-        }
-#openai.api_key = OPENAPI_KEY
+
+openai.api_key = "OPEN_API_KEY"
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
