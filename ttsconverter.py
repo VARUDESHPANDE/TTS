@@ -3,7 +3,7 @@ from docx import Document
 import pyttsx3
 import os
 import shutil
-from openai import OpenAI
+import openai
 
 # Set your OpenAI API key here
 
