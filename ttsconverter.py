@@ -4,7 +4,7 @@ import pyttsx3
 import os
 import shutil
 import openai
-from openai import OpenAI
+#from openai import OpenAI
 
 '''client = OpenAI(
     # This is the default and can be omitted
