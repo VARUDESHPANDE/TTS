@@ -2,3 +2,4 @@ streamlit
 python-docx
 pyttsx3
 openai==0.28
+libespeak1
