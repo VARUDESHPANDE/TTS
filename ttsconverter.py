@@ -3,15 +3,21 @@ from docx import Document
 import pyttsx3
 import os
 import shutil
-import openai
+#import openai
+from openai import OpenAI
+
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=os.environ.get("OPENAI_API_KEY"),
+)
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
 os.makedirs('output', exist_ok=True)
 
 # Extract OpenAI API key from environment variable
-openai_api_key = st.secrets["OPENAI_API_KEY"]
-openai.api_key = openai_api_key
+#openai_api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = api_key
 
 def extract_text_from_docx(docx_file):
     doc = Document(docx_file)
