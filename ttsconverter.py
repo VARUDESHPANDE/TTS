@@ -3,13 +3,13 @@ from docx import Document
 import pyttsx3
 import os
 import shutil
-#import openai
+import openai
 from openai import OpenAI
 
-client = OpenAI(
+'''client = OpenAI(
     # This is the default and can be omitted
     api_key=os.environ.get("OPENAI_API_KEY"),
-)
+)'''
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
@@ -54,7 +54,7 @@ def latex_to_readable(latex_code):
     """
     
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are an intelligent assistant."},
