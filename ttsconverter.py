@@ -5,7 +5,7 @@ import os
 import shutil
 import openai
 
-  headers = {
+headers = {
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {auth_key}',
         }
