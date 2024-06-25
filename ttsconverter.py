@@ -5,9 +5,11 @@ import os
 import shutil
 import openai
 
-headers = {
-    "authorization": st.secrets["auth_token"],
-}
+  headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {auth_key}',
+        }
+
     
 # Set your OpenAI API key here
 openai.api_key = "OPEN_API_KEY"
