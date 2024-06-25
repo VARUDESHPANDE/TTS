@@ -5,6 +5,8 @@ import os
 import shutil
 import openai
 
+openai migrate 
+
 # Set your OpenAI API key here
 openai.api_key = "OPEN_API_KEY"
 
