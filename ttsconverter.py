@@ -1,6 +1,6 @@
 import streamlit as st
 from docx import Document
-from gtts import gTTS
+import pyttsx3
 import os
 import shutil
 import openai
@@ -22,8 +22,9 @@ def extract_text_from_docx(docx_file):
 
 def convert_text_to_speech(text, output_path):
     try:
-        tts = gTTS(text)
-        tts.save(output_path)
+        engine = pyttsx3.init()
+        engine.save_to_file(text, output_path)
+        engine.runAndWait()
     except Exception as e:
         return str(e)
     return None
@@ -95,16 +96,11 @@ if uploaded_file is not None:
         st.error(f"Error during text-to-speech conversion: {error}")
     else:
         st.success("Text-to-speech conversion completed!")
-        
-        # Check if the MP3 file was created successfully
-        if os.path.exists(mp3_output_path):
-            st.write("Download your MP3 file:")
-            with open(mp3_output_path, "rb") as f:
-                st.download_button(
-                    label="Download MP3",
-                    data=f,
-                    file_name="final.mp3",
-                    mime="audio/mpeg"
-                )
-        else:
-            st.error("MP3 file was not created successfully.")
+        st.write("Download your MP3 file:")
+        with open(mp3_output_path, "rb") as f:
+            st.download_button(
+                label="Download MP3",
+                data=f,
+                file_name="final.mp3",
+                mime="audio/mpeg"
+            )
