@@ -1,6 +1,6 @@
 streamlit
 python-docx
 gtts
-openai
+openai==0.28
 
 
