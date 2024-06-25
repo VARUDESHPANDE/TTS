@@ -16,8 +16,8 @@ os.makedirs('uploads', exist_ok=True)
 os.makedirs('output', exist_ok=True)
 
 # Extract OpenAI API key from environment variable
-#openai_api_key = st.secrets["OPENAI_API_KEY"]
-openai.api_key = api_key
+openai_api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = openai_api_key
 
 def extract_text_from_docx(docx_file):
     doc = Document(docx_file)
