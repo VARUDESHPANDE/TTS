@@ -9,7 +9,7 @@ import openai
 
     
 # Set your OpenAI API key here
-openai.api_key = "OPENAI_API_KEY"
+openai_api_key = "OPENAI_API_KEY"
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
