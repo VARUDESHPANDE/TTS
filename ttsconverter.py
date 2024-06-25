@@ -5,7 +5,10 @@ import os
 import shutil
 import openai
 
-
+headers = {
+    "authorization": st.secrets["auth_token"],
+}
+    
 # Set your OpenAI API key here
 openai.api_key = "OPEN_API_KEY"
 
