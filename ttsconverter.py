@@ -7,7 +7,7 @@ import openai
 
 headers = {
             'Content-Type': 'application/json',
-            'Authorization': f'Bearer {auth_key}',
+            'Authorization': f'Bearer {api_key}',
         }
 
     
