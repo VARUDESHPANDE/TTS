@@ -64,7 +64,7 @@ def latex_to_readable(latex_code):
     return human_readable_text
 
 # Streamlit app
-st.title("LaTeX and Code to Speech Converter")
+st.title("LaTeX and Code to Speech Converter - With Code Narration")
 
 st.write("""Upload a DOCX file with LaTeX content and/or programming code, and get an MP3 narration.""")
 
