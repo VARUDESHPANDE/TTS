@@ -1,8 +1,9 @@
+import openai
+import tiktoken
 import streamlit as st
 from docx import Document
 import os
 import shutil
-import openai
 from io import BytesIO
 
 # Ensure necessary directories exist
@@ -25,6 +26,10 @@ def clear_directory(dir_path):
         shutil.rmtree(dir_path)
     os.makedirs(dir_path, exist_ok=True)
 
+def count_tokens(text, model="gpt-3.5-turbo"):
+    encoding = tiktoken.encoding_for_model(model)
+    return len(encoding.encode(text))
+
 def latex_to_readable(latex_code):
     combined_prompt = f"""
     You are an intelligent assistant. Your task is to convert LaTeX code and programming code in the given text to plain English and provide summaries for tables and images. Follow these specific instructions:
@@ -38,7 +43,7 @@ def latex_to_readable(latex_code):
     Text to convert:
     {latex_code}
     """
-    
+
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -48,10 +53,16 @@ def latex_to_readable(latex_code):
             ]
         )
         human_readable_text = response.choices[0].message['content'].strip()
+
+        # Calculate tokens
+        prompt_tokens = count_tokens(combined_prompt)
+        response_tokens = count_tokens(human_readable_text)
+        total_tokens = prompt_tokens + response_tokens
+
+        return human_readable_text, total_tokens
+
     except Exception as e:
-        return f"Error: {e}"
-    
-    return human_readable_text
+        return f"Error: {e}", 0
 
 def save_text_to_docx(text, output_path):
     doc = Document()
@@ -79,13 +90,16 @@ if uploaded_file is not None:
     # Use ChatGPT Turbo to convert text
     try:
         with st.spinner("Converting LaTeX and code to human-readable text..."):
-            converted_text = latex_to_readable(text)
+            converted_text, total_tokens = latex_to_readable(text)
         st.success("Conversion successful!")
     except Exception as e:
         st.error(f"Error communicating with OpenAI: {e}")
 
     st.write("### Converted Text")
     st.write(converted_text)
+
+    st.write("### Total Tokens Used")
+    st.write(total_tokens)
 
     # Save converted text to a DOCX file
     docx_output_path = os.path.join('output', 'converted_text.docx')
