@@ -2,5 +2,5 @@ streamlit
 python-docx
 gtts
 openai==0.28
-
+tiktoken
 
