@@ -1,9 +1,9 @@
 import streamlit as st
 from docx import Document
-from gtts import gTTS
 import os
 import shutil
 import openai
+from io import BytesIO
 
 # Ensure necessary directories exist
 os.makedirs('uploads', exist_ok=True)
@@ -13,22 +13,12 @@ os.makedirs('output', exist_ok=True)
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
-
-
 def extract_text_from_docx(docx_file):
     doc = Document(docx_file)
     full_text = []
     for para in doc.paragraphs:
         full_text.append(para.text)
     return '\n'.join(full_text)
-
-def convert_text_to_speech(text, output_path):
-    try:
-        tts = gTTS(text)
-        tts.save(output_path)
-    except Exception as e:
-        return str(e)
-    return None
 
 def clear_directory(dir_path):
     if os.path.exists(dir_path):
@@ -63,10 +53,15 @@ def latex_to_readable(latex_code):
     
     return human_readable_text
 
-# Streamlit app
-st.title("LaTeX and Code to Speech Converter - With Code Narration")
+def save_text_to_docx(text, output_path):
+    doc = Document()
+    doc.add_paragraph(text)
+    doc.save(output_path)
 
-st.write("""Upload a DOCX file with LaTeX content and/or programming code, and get an MP3 narration.""")
+# Streamlit app
+st.title("LaTeX and Code to Human-Readable Text Converter")
+
+st.write("""Upload a DOCX file with LaTeX content and/or programming code, and get a human-readable text version.""")
 
 uploaded_file = st.file_uploader("Choose a DOCX file", type="docx")
 
@@ -92,20 +87,15 @@ if uploaded_file is not None:
     st.write("### Converted Text")
     st.write(converted_text)
 
-    mp3_output_path = os.path.join('output', 'final.mp3')
-    error = convert_text_to_speech(converted_text, mp3_output_path)
-    if error:
-        st.error(f"Error during text-to-speech conversion: {error}")
-    else:
-        if os.path.exists(mp3_output_path):
-            st.success("Text-to-speech conversion completed and MP3 file created!")
-            st.write("Download your MP3 file:")
-            with open(mp3_output_path, "rb") as f:
-                st.download_button(
-                    label="Download MP3",
-                    data=f,
-                    file_name="final.mp3",
-                    mime="audio/mpeg"
-                )
-        else:
-            st.error("Text-to-speech conversion failed: MP3 file not created.")
+    # Save converted text to a DOCX file
+    docx_output_path = os.path.join('output', 'converted_text.docx')
+    save_text_to_docx(converted_text, docx_output_path)
+
+    # Provide a download link for the DOCX file
+    with open(docx_output_path, "rb") as f:
+        st.download_button(
+            label="Download DOCX",
+            data=f,
+            file_name="converted_text.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
